@@ -123,7 +123,6 @@
     <source srcset="<?php echo esc_url( get_template_directory_uri() . '/build/img/home/dawn.webp' ); ?>" type="image/webp" />
     <img
       src="<?php echo esc_url( get_template_directory_uri() . '/build/img/home/dawn.png' ); ?>"
-      srcset="./img/home/dawn.png 1x, ./img/home/dawn@2x.png 2x"
       alt=""
       loading="eager"
       width="1440"

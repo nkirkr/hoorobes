@@ -17,6 +17,7 @@ define('THEME_URI', get_template_directory_uri());
 require_once THEME_DIR . '/includes/carbon-fields/init.php';
 require_once THEME_DIR . '/includes/enqueue.php';
 require_once THEME_DIR . '/includes/custom-post-types.php';
+require_once THEME_DIR . '/includes/globals.php';
 
 add_action('after_setup_theme', 'roblox_theme_setup');
 
