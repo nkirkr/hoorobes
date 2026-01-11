@@ -48,14 +48,14 @@
         
         <div class="footer__socials">
           <a
-            href="https://t.me/yourhandle"
+            href="<?php echo esc_url($GLOBALS['contacts']['tg']); ?>"
             class="footer__social"
             target="_blank"
             rel="noopener noreferrer"
             >Telegram</a
           >
           <a
-            href="https://discord.gg/yourserver"
+            href="<?php echo esc_url($GLOBALS['contacts']['discord']); ?>"
             class="footer__social"
             target="_blank"
             rel="noopener noreferrer"
@@ -69,24 +69,28 @@
 
     <div class="footer__bottom">
       <div class="footer__links">
-        <a href="#privacy" class="footer__link"
-          >Политика обработки персональных данных</a
-        >
-        <a href="#consent" class="footer__link"
-          >Согласие на обработку персональных данных</a
-        >
+        <?php if ( !empty($GLOBALS['contacts']['policy']) ) : ?>
+          <a href="<?php echo esc_url($GLOBALS['contacts']['policy']); ?>" class="footer__link" target="_blank" rel="noopener noreferrer"
+            >Политика обработки персональных данных</a
+          >
+        <?php endif; ?>
+        <?php if ( !empty($GLOBALS['contacts']['consent']) ) : ?>
+          <a href="<?php echo esc_url($GLOBALS['contacts']['consent']); ?>" class="footer__link" target="_blank" rel="noopener noreferrer"
+            >Согласие на обработку персональных данных</a
+          >
+        <?php endif; ?>
       </div>
       
       <div class="footer__socials footer__socials--desktop">
         <a
-          href="https://t.me/yourhandle"
+          href="<?php echo esc_url($GLOBALS['contacts']['tg']); ?>"
           class="footer__social"
           target="_blank"
           rel="noopener noreferrer"
           >Telegram</a
         >
         <a
-          href="https://discord.gg/yourserver"
+          href="<?php echo esc_url($GLOBALS['contacts']['discord']); ?>"
           class="footer__social"
           target="_blank"
           rel="noopener noreferrer"

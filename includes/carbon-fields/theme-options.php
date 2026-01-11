@@ -15,6 +15,12 @@ Container::make('theme_options', __('Общие настройки', 'ercogroup-
     ->add_tab('Контакты', [
         Field::make('text', 'site_discord', 'Discord'),
         Field::make('text', 'site_tg', 'Telegram')
+    ])
+    ->add_tab('Документы', [
+        Field::make('file', 'policy', 'Политика обработки персональных данных')
+            ->set_value_type('url'),
+        Field::make('file', 'obrabotka', 'Согласие на обработку персональных данных')
+            ->set_value_type('url'),
     ]);
 
 
