@@ -46,7 +46,7 @@
 							<p class="service-card__description"><?php echo wp_kses_post($descr); ?></p>
 						</div>
 
-						<a href="./service-page.html" class="service-card__button">
+						<a href="<?php the_permalink(); ?>" class="service-card__button">
 							<span class="service-card__button-text"><?php the_title(); ?></span>
 							<span class="service-card__button-icon">
 								<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
