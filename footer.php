@@ -15,11 +15,11 @@
       </div>
 
       <nav class="footer__nav">
-        <a href="./index.html" class="footer__nav-link">Главная</a>
-        <a href="./services.html" class="footer__nav-link">Услуги</a>
-        <a href="./projects.html" class="footer__nav-link">Проекты</a>
-        <a href="./index.html#about" class="footer__nav-link">О нас</a>
-        <a href="./index.html#team" class="footer__nav-link">Команда</a>
+        <a href="/" class="footer__nav-link">Главная</a>
+        <a href="<?php echo the_permalink(47); ?>" class="footer__nav-link">Услуги</a>
+        <a href="<?php echo the_permalink(53); ?>" class="footer__nav-link">Проекты</a>
+        <a href="/#about" class="footer__nav-link">О нас</a>
+        <a href="/#team" class="footer__nav-link">Команда</a>
       </nav>
 
       <div class="footer__actions">

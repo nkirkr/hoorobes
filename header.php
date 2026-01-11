@@ -59,19 +59,19 @@
         role="navigation"
         aria-label="Основная навигация"
       >
-        <a href="./services.html" class="nav__link" data-page="services">
+        <a href="<?php echo the_permalink(47); ?>" class="nav__link" data-page="services">
           <span class="nav__link-blur"></span>
           <span class="nav__link-text">Услуги</span>
         </a>
-        <a href="./projects.html" class="nav__link" data-page="projects">
+        <a href="<?php echo the_permalink(53); ?>" class="nav__link" data-page="projects">
           <span class="nav__link-blur"></span>
           <span class="nav__link-text">Кейсы</span>
         </a>
-        <a href="./index.html#about" class="nav__link" data-page="about">
+        <a href="/#about" class="nav__link" data-page="about">
           <span class="nav__link-blur"></span>
           <span class="nav__link-text">О нас</span>
         </a>
-        <a href="./index.html#team" class="nav__link" data-page="team">
+        <a href="/#team" class="nav__link" data-page="team">
           <span class="nav__link-blur"></span>
           <span class="nav__link-text">Команда</span>
         </a>
