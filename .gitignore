@@ -1,0 +1,13 @@
+node_modules
+.webp
+vendor
+.DS_Store
+
+# IDE
+.vscode/
+
+# мусор/артефакты из Cursor/локальные пути Windows
+assets/c__Users_*
+
+# сборка (если build генерится)
+build/
