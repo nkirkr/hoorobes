@@ -126,3 +126,19 @@ Container::make('post_meta', 'Дополнительные поля')
 ->add_tab('Общее', [
     Field::make('text', 'service_price', 'Цена'),
 ]);
+
+Container::make('post_meta', 'Дополнительные поля')
+->show_on_post_type('cases')
+// ->add_tab('Карточка', [
+//     Field::make('text', 'service_exceprt', 'Краткое описание'),
+//     Field::make('image', 'service_preview_img', 'Изображение'),
+// ])
+->add_tab('Первый блок', [
+    Field::make('image', 'case_poster', 'Обложка видео')->set_width(50),
+    Field::make( 'file', 'case_video', 'Видео' )
+    ->set_type( 'video' )
+    ->set_width(50),
+]);
+// ->add_tab('Общее', [
+//     Field::make('text', 'service_price', 'Цена'),
+// ]);

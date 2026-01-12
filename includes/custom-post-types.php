@@ -1,12 +1,11 @@
 <?php
 
-// Защита от прямого доступа
 if (!defined('ABSPATH')) {
     exit;
 }
 
 
-function erco_register_post_types() {
+function roblox_register_post_types() {
     
     register_post_type('team', array(
         'labels' => array(
@@ -24,7 +23,7 @@ function erco_register_post_types() {
         'has_archive'  => true,
         'menu_icon'    => 'dashicons-admin-users',
         'supports'     => array('title'),
-        'rewrite'      => array('slug' => 'komanda'),
+        'rewrite'      => array('slug' => 'team'),
         'show_in_rest' => true,
     ));
 
@@ -44,7 +43,7 @@ function erco_register_post_types() {
         'has_archive'  => true,
         'menu_icon'    => 'dashicons-admin-comments',
         'supports'     => array('title'),
-        'rewrite'      => array('slug' => 'otzyvy'),
+        'rewrite'      => array('slug' => 'reviews'),
         'show_in_rest' => true,
     ));
 
@@ -64,28 +63,47 @@ function erco_register_post_types() {
         'has_archive'  => true,
         'menu_icon'    => 'dashicons-hammer',
         'supports'     => array('title'),
-        'rewrite'      => array('slug' => 'uslugi'),
+        'rewrite'      => array('slug' => 'services'),
+        'show_in_rest' => true,
+    ));
+
+    register_post_type('cases', array(
+        'labels' => array(
+            'name'               => 'Кейсы',
+            'singular_name'      => 'Кейс',
+            'add_new'            => 'Добавить кейс',
+            'add_new_item'       => 'Добавить новый кейс',
+            'edit_item'          => 'Редактировать кейс',
+            'new_item'           => 'Новый кейс',
+            'view_item'          => 'Просмотреть кейс',
+            'search_items'       => 'Искать кейсы',
+            'not_found'          => 'Кейсы не найдены',
+        ),
+        'public'       => true,
+        'has_archive'  => true,
+        'menu_icon'    => 'dashicons-portfolio',
+        'supports'     => array('title'),
+        'rewrite'      => array('slug' => 'portfolio'),
         'show_in_rest' => true,
     ));
     
 }
-add_action('init', 'erco_register_post_types');
+add_action('init', 'roblox_register_post_types');
 
 
-function erco_register_taxonomies() {
+function roblox_register_taxonomies() {
     
-    // Пример: Категории услуг
-    register_taxonomy('service_category', 'services', array(
+    register_taxonomy('case_type', 'cases', array(
         'labels' => array(
-            'name'          => 'Категории услуг',
-            'singular_name' => 'Категория услуг',
+            'name'          => 'Категории игр',
+            'singular_name' => 'Категория игр',
         ),
         'hierarchical'      => true,
         'show_admin_column' => true,
-        'rewrite'           => array('slug' => 'service-category'),
+        'rewrite'           => array('slug' => 'case-category'),
         'show_in_rest'      => true,
     ));
     
 }
-add_action('init', 'erco_register_taxonomies');
+add_action('init', 'roblox_register_taxonomies');
 
