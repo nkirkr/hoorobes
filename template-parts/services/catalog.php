@@ -47,7 +47,12 @@
 						</div>
 
 						<a href="<?php the_permalink(); ?>" class="service-card__button">
-							<span class="service-card__button-text"><?php the_title(); ?></span>
+							<?php
+							$btn_text = carbon_get_the_post_meta('service_btn_text');
+							?>
+							<span class="service-card__button-text">
+								<?php echo !empty($btn_text) ? $btn_text : 'Подробнее'; ?>
+							</span>
 							<span class="service-card__button-icon">
 								<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
 									<path d="M3.125 10H16.875" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />

@@ -38,7 +38,7 @@
 
       <div class="hero__buttons">
         <a
-          href="services.html"
+          href="<?php echo the_permalink(47); ?>"
           class="hero__button button button--primary"
           aria-label="Начать проект"
         >

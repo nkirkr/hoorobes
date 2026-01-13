@@ -5,60 +5,71 @@
   </div>
 
   <div class="container">
-    <div class="game-about__hero">
-      <img
-        src="./img/game/hero.png"
-        alt="О игре"
-        class="game-about__hero-image"
-      />
-      <div class="game-about__hero-overlay"></div>
+    <?php
+    $banner = carbon_get_the_post_meta('case_banner_img');
+    $banner_url = $banner ? wp_get_attachment_url($banner) : get_template_directory_uri() . '/build/img/game/hero.webp';
+;
+    if (!empty($banner_url)): ?>
+      <div class="game-about__hero">
+        <img
+          src="<?php echo esc_url($banner_url); ?>"
+          alt="О игре"
+          class="game-about__hero-image"
+        />
+        <div class="game-about__hero-overlay"></div>
+      </div>
+    <?php endif; ?>
+
+    <div class="game-about__description">
+      <?php echo wpautop( carbon_get_the_post_meta('case_banner_descr') ); ?>
     </div>
 
-    <p class="game-about__description">
-      Hooroobes — студия разработки игр нового поколения. Мы создаём авторские
-      миры с уникальной визуальной ДНК и механиками, от которых невозможно
-      оторваться. От атмосферных инди-проектов до амбициозных тайтлов, готовых
-      ворваться в глобальные топы.
-    </p>
-
-    <a href="#" class="game-about__button button" aria-label="Играть в игру">
+    <a href="<?php echo esc_url( carbon_get_the_post_meta('case_link') ); ?>" class="game-about__button button" aria-label="Играть в игру" target="_blank" rel="noopener noreferrer">
       Играть в игру
     </a>
   </div>
 
-  <div class="game-about__slider">
-    <div class="game-about__slider-track">
-      <div class="game-about__slide">
-        <img src="./img/game/gallery-1.png" alt="Скриншот игры 1" />
-      </div>
-      <div class="game-about__slide">
-        <img src="./img/game/gallery-2.png" alt="Скриншот игры 2" />
-      </div>
-      <div class="game-about__slide">
-        <img src="./img/game/gallery-3.png" alt="Скриншот игры 3" />
-      </div>
 
-      <div class="game-about__slide">
-        <img src="./img/game/gallery-1.png" alt="Скриншот игры 1" />
-      </div>
-      <div class="game-about__slide">
-        <img src="./img/game/gallery-2.png" alt="Скриншот игры 2" />
-      </div>
-      <div class="game-about__slide">
-        <img src="./img/game/gallery-3.png" alt="Скриншот игры 3" />
-      </div>
+  <?php
+  $gallery = carbon_get_the_post_meta('case_slider');
+  if (!empty($gallery)): ?>
 
-      <div class="game-about__slide">
-        <img src="./img/game/gallery-1.png" alt="Скриншот игры 1" />
-      </div>
-      <div class="game-about__slide">
-        <img src="./img/game/gallery-2.png" alt="Скриншот игры 2" />
-      </div>
-      <div class="game-about__slide">
-        <img src="./img/game/gallery-3.png" alt="Скриншот игры 3" />
+    <div class="game-about__slider">
+      <div class="game-about__slider-track">
+      <?php foreach ($gallery as $slide) : 
+        $image = wp_get_attachment_url($slide['image']);  
+      ?>
+        
+        <div class="game-about__slide">
+          <img src="<?php echo esc_url($image); ?>" alt="Скриншот игры" />
+        </div>
+
+        <?php endforeach; ?>
+
+        <?php foreach ($gallery as $slide) : 
+          $image = wp_get_attachment_url($slide['image']);  
+        ?>
+
+        <div class="game-about__slide">
+          <img src="<?php echo esc_url($image); ?>" alt="Скриншот игры" />
+        </div>
+
+        <?php endforeach; ?>
+        <?php foreach ($gallery as $slide) : 
+          $image = wp_get_attachment_url($slide['image']);  
+        ?>
+
+        <div class="game-about__slide">
+          <img src="<?php echo esc_url($image); ?>" alt="Скриншот игры" />
+        </div>
+
+        <?php endforeach; ?>
+
       </div>
     </div>
-  </div>
+
+  <?php endif; ?>
+  
 
   <div class="container">
     <div class="game-about__navigation">
@@ -67,7 +78,7 @@
         aria-label="Предыдущий слайд"
       >
         <img
-          src="./img/svgicons/all/arrow-active.svg"
+          src="<?php echo esc_url( get_template_directory_uri() . '/build/img/svgicons/all/arrow-active.svg' ); ?>"
           alt=""
           aria-hidden="true"
         />
@@ -77,7 +88,7 @@
         aria-label="Следующий слайд"
       >
         <img
-          src="./img/svgicons/all/arrow-active.svg"
+          src="<?php echo esc_url( get_template_directory_uri() . '/build/img/svgicons/all/arrow-active.svg' ); ?>"
           alt=""
           aria-hidden="true"
         />

@@ -119,6 +119,7 @@ Container::make('post_meta', 'Дополнительные поля')
 ->add_tab('Карточка', [
     Field::make('text', 'service_exceprt', 'Краткое описание'),
     Field::make('image', 'service_preview_img', 'Изображение'),
+    Field::make('text', 'service_btn_text', 'Текст кнопки')->set_help_text('По умолчанию "Подробнее"'),
 ])
 ->add_tab('Внутренняя страница', [
     Field::make('image', 'service_inner_img', 'Изображение'),
@@ -138,7 +139,31 @@ Container::make('post_meta', 'Дополнительные поля')
     Field::make( 'file', 'case_video', 'Видео' )
     ->set_type( 'video' )
     ->set_width(50),
+])
+->add_tab('Карточка на внутренней странице', [
+    Field::make('image', 'case_inner_card_img', 'Логотип'),
+    Field::make('text', 'case_client', 'Клиент'),
+    Field::make('text', 'case_client_descr', 'Описание'),
+    Field::make('text', 'case_date', 'Дата'),
+])
+->add_tab('О игре', [
+    Field::make('rich_text', 'case_descr', 'Описание'),
+    Field::make('text', 'case_link', 'Ссылка на игру'),
+])
+->add_tab('Блок со статистикой', [
+    Field::make('complex', 'case_stats', 'Пункты статистики')
+    ->add_fields([
+        Field::make('text', 'title', 'Заголовок')->set_width(50),
+        Field::make('text', 'descr', 'Описание')->set_width(50),
+    ])->set_max(4),
+])
+->add_tab('Блок с баннером', [
+    Field::make('image', 'case_banner_img', 'Изображение'),
+    Field::make('rich_text', 'case_banner_descr', 'Описание'),
+])
+->add_tab('Слайдер с изображениями', [
+    Field::make('complex', 'case_slider', 'Слайдер')
+    ->add_fields([
+        Field::make('image', 'image', 'Изображение')
+    ])
 ]);
-// ->add_tab('Общее', [
-//     Field::make('text', 'service_price', 'Цена'),
-// ]);

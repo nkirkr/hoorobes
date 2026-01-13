@@ -18,6 +18,7 @@ require_once THEME_DIR . '/includes/carbon-fields/init.php';
 require_once THEME_DIR . '/includes/enqueue.php';
 require_once THEME_DIR . '/includes/custom-post-types.php';
 require_once THEME_DIR . '/includes/globals.php';
+require_once THEME_DIR . '/includes/ajax-handlers.php';
 
 add_action('after_setup_theme', 'roblox_theme_setup');
 

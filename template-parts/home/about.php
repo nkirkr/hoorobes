@@ -105,7 +105,7 @@
           <?php endif; ?>
 
         <a
-          href="services.html"
+          href="<?php echo the_permalink(47); ?>"
           class="about__button button"
           aria-label="Начать проект"
         >

@@ -27,6 +27,14 @@
   <div class="container">
     <h1 class="projects__title">Работали над проектами</h1>
 
+    <?php 
+    // Получаем все термины таксономии case_type
+    $case_types = get_terms(array(
+        'taxonomy' => 'case_type',
+        'hide_empty' => false,
+    ));
+    ?>
+
     <div class="projects__filters-wrapper projects__filters-wrapper--desktop">
       <div class="projects__filters">
         <button
@@ -35,12 +43,17 @@
         >
           Все
         </button>
-        <button class="projects__filter" data-filter="classic">
-          Классические игры
-        </button>
-        <button class="projects__filter" data-filter="brand">
-          Бренд игры
-        </button>
+        <?php if (!empty($case_types) && !is_wp_error($case_types)) : ?>
+          <?php foreach ($case_types as $term) : ?>
+            <button 
+              class="projects__filter" 
+              data-filter="<?php echo esc_attr($term->slug); ?>"
+              data-term-id="<?php echo esc_attr($term->term_id); ?>"
+            >
+              <?php echo esc_html($term->name); ?>
+            </button>
+          <?php endforeach; ?>
+        <?php endif; ?>
       </div>
     </div>
 
@@ -71,165 +84,89 @@
           >
             Все
           </button>
-          <button class="projects__dropdown-item" data-filter="classic">
-            Классические игры
-          </button>
-          <button class="projects__dropdown-item" data-filter="brand">
-            Бренд игры
-          </button>
+          <?php if (!empty($case_types) && !is_wp_error($case_types)) : ?>
+            <?php foreach ($case_types as $term) : ?>
+              <button 
+                class="projects__dropdown-item" 
+                data-filter="<?php echo esc_attr($term->slug); ?>"
+                data-term-id="<?php echo esc_attr($term->term_id); ?>"
+              >
+                <?php echo esc_html($term->name); ?>
+              </button>
+            <?php endforeach; ?>
+          <?php endif; ?>
         </div>
       </div>
     </div>
 
     <div class="projects__grid">
-      <article class="project-card" data-category="classic">
-        <img
-          src="./img/projects/project.png"
-          alt="Название проекта"
-          class="project-card__image"
-          loading="lazy"
-        />
-        <div class="project-card__overlay"></div>
-        <a href="./game.html" class="project-card__button">
-          <span class="project-card__name">Название</span>
-          <span class="project-card__icon">
-            <img src="./img/svgicons/projects/arrow.svg" alt="Arrow" />
-          </span>
-        </a>
-      </article>
+      <?php
+      // Запрос для получения постов cases
+      $paged = 1;
+      $posts_per_page = 9; // Количество постов на странице
+      
+      $args = array(
+          'post_type' => 'cases',
+          'posts_per_page' => $posts_per_page,
+          'paged' => $paged,
+          'orderby' => 'date',
+          'order' => 'DESC',
+      );
 
-      <article class="project-card" data-category="brand">
-        <img
-          src="./img/projects/project.png"
-          alt="Название проекта"
-          class="project-card__image"
-          loading="lazy"
-        />
-        <div class="project-card__overlay"></div>
-        <a href="./game.html" class="project-card__button">
-          <span class="project-card__name">Название</span>
-          <span class="project-card__icon">
-            <img src="./img/svgicons/projects/arrow.svg" alt="Arrow" />
-          </span>
-        </a>
-      </article>
+      $cases_query = new WP_Query($args);
 
-      <article class="project-card" data-category="classic">
-        <img
-          src="./img/projects/project.png"
-          alt="Название проекта"
-          class="project-card__image"
-          loading="lazy"
-        />
-        <div class="project-card__overlay"></div>
-        <a href="./game.html" class="project-card__button">
-          <span class="project-card__name">Название</span>
-          <span class="project-card__icon">
-            <img src="./img/svgicons/projects/arrow.svg" alt="Arrow" />
-          </span>
-        </a>
-      </article>
+      if ($cases_query->have_posts()) :
+          while ($cases_query->have_posts()) : $cases_query->the_post();
+              // Получаем категории поста
+              $terms = get_the_terms(get_the_ID(), 'case_type');
+              $category_slug = '';
+              if ($terms && !is_wp_error($terms)) {
+                  $category_slug = $terms[0]->slug;
+              }
+              
+              // Получаем изображение
+              $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
+              if (!$thumbnail_url) {
+                  $thumbnail_url = THEME_URI . '/build/img/projects/project.png';
+              }
+              ?>
+              <article class="project-card" data-category="<?php echo esc_attr($category_slug); ?>">
+                <img
+                  src="<?php echo esc_url($thumbnail_url); ?>"
+                  alt="<?php echo esc_attr(get_the_title()); ?>"
+                  class="project-card__image"
+                  loading="lazy"
+                />
+                <div class="project-card__overlay"></div>
+                <a href="<?php echo esc_url(get_permalink()); ?>" class="project-card__button">
+                  <span class="project-card__name"><?php echo esc_html(get_the_title()); ?></span>
+                  <span class="project-card__icon">
+                    <img src="<?php echo THEME_URI; ?>/build/img/svgicons/projects/arrow.svg" alt="Arrow" />
+                  </span>
+                </a>
+              </article>
+              <?php
+          endwhile;
+      else :
+          ?>
+          <p>Кейсы не найдены.</p>
+          <?php
+      endif;
 
-      <article class="project-card" data-category="brand">
-        <img
-          src="./img/projects/project.png"
-          alt="Название проекта"
-          class="project-card__image"
-          loading="lazy"
-        />
-        <div class="project-card__overlay"></div>
-        <a href="./game.html" class="project-card__button">
-          <span class="project-card__name">Название</span>
-          <span class="project-card__icon">
-            <img src="./img/svgicons/projects/arrow.svg" alt="Arrow" />
-          </span>
-        </a>
-      </article>
-
-      <article class="project-card" data-category="classic">
-        <img
-          src="./img/projects/project.png"
-          alt="Название проекта"
-          class="project-card__image"
-          loading="lazy"
-        />
-        <div class="project-card__overlay"></div>
-        <a href="./game.html" class="project-card__button">
-          <span class="project-card__name">Название</span>
-          <span class="project-card__icon">
-            <img src="./img/svgicons/projects/arrow.svg" alt="Arrow" />
-          </span>
-        </a>
-      </article>
-
-      <article class="project-card" data-category="brand">
-        <img
-          src="./img/projects/project.png"
-          alt="Название проекта"
-          class="project-card__image"
-          loading="lazy"
-        />
-        <div class="project-card__overlay"></div>
-        <a href="./game.html" class="project-card__button">
-          <span class="project-card__name">Название</span>
-          <span class="project-card__icon">
-            <img src="./img/svgicons/projects/arrow.svg" alt="Arrow" />
-          </span>
-        </a>
-      </article>
-
-      <article class="project-card" data-category="classic">
-        <img
-          src="./img/projects/project.png"
-          alt="Название проекта"
-          class="project-card__image"
-          loading="lazy"
-        />
-        <div class="project-card__overlay"></div>
-        <a href="./game.html" class="project-card__button">
-          <span class="project-card__name">Название</span>
-          <span class="project-card__icon">
-            <img src="./img/svgicons/projects/arrow.svg" alt="Arrow" />
-          </span>
-        </a>
-      </article>
-
-      <article class="project-card" data-category="brand">
-        <img
-          src="./img/projects/project.png"
-          alt="Название проекта"
-          class="project-card__image"
-          loading="lazy"
-        />
-        <div class="project-card__overlay"></div>
-        <a href="./game.html" class="project-card__button">
-          <span class="project-card__name">Название</span>
-          <span class="project-card__icon">
-            <img src="./img/svgicons/projects/arrow.svg" alt="Arrow" />
-          </span>
-        </a>
-      </article>
-
-      <article class="project-card" data-category="classic">
-        <img
-          src="./img/projects/project.png"
-          alt="Название проекта"
-          class="project-card__image"
-          loading="lazy"
-        />
-        <div class="project-card__overlay"></div>
-        <a href="./game.html" class="project-card__button">
-          <span class="project-card__name">Название</span>
-          <span class="project-card__icon">
-            <img src="./img/svgicons/projects/arrow.svg" alt="Arrow" />
-          </span>
-        </a>
-      </article>
+      wp_reset_postdata();
+      ?>
     </div>
 
-    <button class="projects__load-more" aria-label="Загрузить больше проектов">
-      Загрузить ещё
-    </button>
+    <?php if ($cases_query->max_num_pages > 1) : ?>
+      <button 
+        class="projects__load-more" 
+        aria-label="Загрузить больше проектов"
+        data-page="1"
+        data-max-pages="<?php echo esc_attr($cases_query->max_num_pages); ?>"
+      >
+        Загрузить ещё
+      </button>
+    <?php endif; ?>
   </div>
 
 </section>

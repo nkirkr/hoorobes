@@ -5,78 +5,59 @@
   <div class="container">
     <div class="game-info__content">
       <div class="game-info__card">
-        <img
-          src="./img/game/hero.png"
-          alt="Фон игры"
-          class="game-info__bg-image"
-        />
 
         <div class="game-info__photo-blur game-info__photo-blur--1"></div>
         <div class="game-info__photo-blur game-info__photo-blur--2"></div>
 
         <div class="game-info__photo-content">
-          <div class="game-info__logo-box">
-            <span class="game-info__logo-text">Логотип</span>
+          <div class="game-info__logo-box" styles="background-image: url(<?php echo esc_url( get_template_directory_uri() . '/build/img/home/dawn.webp' ); ?>)">
+            <img
+              src="<?php echo esc_url( wp_get_attachment_url( carbon_get_the_post_meta('case_inner_card_img') ) ); ?>"
+              alt="Фон игры"
+            />
           </div>
 
           <div class="game-info__client-info">
-            <h3 class="game-info__client-title">Клиент</h3>
+            <h3 class="game-info__client-title"><?php echo esc_html( carbon_get_the_post_meta('case_client')); ?></h3>
             <p class="game-info__client-description">
-              Hooroobes — студия разработки игр нового поколения. Мы создаём
-              авторские миры с уникальной визуальной ДНК и механиками, от
-              которых невозможно оторваться
+              <?php echo esc_html( carbon_get_the_post_meta('case_client_descr')); ?>
             </p>
           </div>
 
           <div class="game-info__date-badge">
-            <span><strong>Дата:</strong> 13.09.2025</span>
+            <span><strong>Дата:</strong> <?php echo esc_html( carbon_get_the_post_meta('case_date')); ?></span>
           </div>
         </div>
       </div>
 
       <div class="game-info__description">
-        <h2 class="game-info__title">Название игры</h2>
-        <p class="game-info__text">
-          Hooroobes — студия разработки игр нового поколения. Мы создаём
-          авторские миры с уникальной визуальной ДНК и механиками, от которых
-          невозможно оторваться. От атмосферных инди-проектов до амбициозных
-          тайтлов, готовых ворваться в глобальные топы.
-        </p>
-        <p class="game-info__text">
-          Каждый наш проект — это не просто игра, а целая вселенная с
-          харизматичными персонажами и историей, в которую хочется возвращаться.
-        </p>
-        <a href="#" class="game-info__button button" aria-label="Играть в игру">
+        <h1 class="game-info__title"><?php the_title(); ?></h1>
+        <div class="game-info__text">
+          <?php echo wpautop( carbon_get_the_post_meta('case_descr') ); ?>
+        </div>
+        <a href="<?php echo esc_url( carbon_get_the_post_meta('case_link') ); ?>" class="game-info__button button" aria-label="Играть в игру" target="_blank" rel="noopener noreferrer">
           Играть в игру
         </a>
       </div>
     </div>
 
-    <div class="game-info__stats">
-      <div class="game-info__stat">
-        <div class="game-info__stat-value">32,9 тыс</div>
-        <div class="game-info__stat-label">
-          Игроки которые играют прямо сейчас
-        </div>
+    <?php
+    $stats_list = carbon_get_the_post_meta('case_stats');
+
+    if (!empty($stats_list)) : ?>
+      <div class="game-info__stats">
+        <?php foreach ($stats_list as $item) : 
+          $title = $item['title'];  
+          $descr = $item['descr'];  
+        ?>
+          <div class="game-info__stat">
+            <div class="game-info__stat-value"><?php echo esc_html($title); ?></div>
+            <div class="game-info__stat-label">
+              <?php echo esc_html($descr); ?>
+            </div>
+          </div>
+        <?php endforeach; ?>
       </div>
-      <div class="game-info__stat">
-        <div class="game-info__stat-value">32,9 тыс</div>
-        <div class="game-info__stat-label">
-          Игроки которые играют прямо сейчас
-        </div>
-      </div>
-      <div class="game-info__stat">
-        <div class="game-info__stat-value">32,9 тыс</div>
-        <div class="game-info__stat-label">
-          Игроки которые играют прямо сейчас
-        </div>
-      </div>
-      <div class="game-info__stat">
-        <div class="game-info__stat-value">32,9 тыс</div>
-        <div class="game-info__stat-label">
-          Игроки которые играют прямо сейчас
-        </div>
-      </div>
-    </div>
+    <?php endif; ?>
   </div>
 </section>

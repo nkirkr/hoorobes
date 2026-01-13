@@ -4,7 +4,8 @@ export function initProjectsLoadMore() {
 
   if (!loadMoreBtn || !projectsGrid) return;
 
-  let currentPage = 1;
+  let currentPage = parseInt(loadMoreBtn.getAttribute('data-page')) || 1;
+  let maxPages = parseInt(loadMoreBtn.getAttribute('data-max-pages')) || 1;
   let isLoading = false;
   let currentFilter = 'all';
 
@@ -13,38 +14,20 @@ export function initProjectsLoadMore() {
     return activeFilter ? activeFilter.getAttribute('data-filter') : 'all';
   }
 
-  const filterButtons = document.querySelectorAll('.projects__filter');
+  // Обновление состояния при изменении фильтра
+  const filterButtons = document.querySelectorAll('.projects__filter, .projects__dropdown-item');
   filterButtons.forEach((button) => {
     button.addEventListener('click', () => {
       currentFilter = getCurrentFilter();
       currentPage = 1;
+      loadMoreBtn.setAttribute('data-page', '1');
+      
+      // Показываем кнопку снова при смене фильтра
+      if (loadMoreBtn) {
+        loadMoreBtn.style.display = 'block';
+      }
     });
   });
-
-  function createProjectCard(project) {
-    const article = document.createElement('article');
-    article.className = 'project-card';
-    article.setAttribute('data-category', project.category);
-    article.style.display = 'none';
-
-    article.innerHTML = `
-      <img
-        src="${project.image}"
-        alt="${project.name}"
-        class="project-card__image"
-        loading="lazy"
-      />
-      <div class="project-card__overlay"></div>
-      <a href="${project.link}" class="project-card__button">
-        <span class="project-card__name">${project.name}</span>
-        <span class="project-card__icon">
-          <img src="./img/svgicons/projects/arrow.svg" alt="Arrow" />
-        </span>
-      </a>
-    `;
-
-    return article;
-  }
 
   async function loadMoreProjects() {
     if (isLoading) return;
@@ -54,47 +37,58 @@ export function initProjectsLoadMore() {
     loadMoreBtn.textContent = 'Загрузка...';
 
     try {
-      const response = await fetch('./data/projects.json');
-      
+      const formData = new FormData();
+      formData.append('action', 'load_more_cases');
+      formData.append('nonce', themeData.nonce);
+      formData.append('page', currentPage + 1);
+      formData.append('category', currentFilter);
+
+      const response = await fetch(themeData.ajaxUrl, {
+        method: 'POST',
+        body: formData,
+      });
+
       if (!response.ok) {
         throw new Error('Ошибка загрузки данных');
       }
 
       const data = await response.json();
-      let projects = data.projects;
 
-      if (currentFilter !== 'all') {
-        projects = projects.filter(
-          (project) => project.category === currentFilter
-        );
-      }
+      if (data.success && data.html) {
+        // Создаем временный контейнер для парсинга HTML
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = data.html;
+        const newCards = tempDiv.querySelectorAll('.project-card');
 
-      if (projects.length === 0) {
-        loadMoreBtn.textContent = 'Больше нет проектов';
-        loadMoreBtn.disabled = true;
-        return;
-      }
-
-      projects.forEach((project, index) => {
-        const card = createProjectCard(project);
-        projectsGrid.appendChild(card);
-
-        setTimeout(() => {
-          card.style.display = 'flex';
+        // Добавляем карточки с анимацией
+        newCards.forEach((card, index) => {
           card.style.opacity = '0';
+          projectsGrid.appendChild(card);
+
           setTimeout(() => {
             card.style.transition = 'opacity 0.3s ease';
             card.style.opacity = '1';
-          }, 10);
-        }, index * 50);
-      });
+          }, index * 50);
+        });
 
-      currentPage++;
-      loadMoreBtn.textContent = 'Загрузить ещё';
+        currentPage++;
+        loadMoreBtn.setAttribute('data-page', currentPage);
+        loadMoreBtn.setAttribute('data-max-pages', data.max_pages);
+        maxPages = data.max_pages;
 
-      if (currentPage > 2) {
-        loadMoreBtn.style.display = 'none';
+        // Скрываем кнопку, если больше нет страниц
+        if (currentPage >= maxPages) {
+          loadMoreBtn.style.display = 'none';
+        }
+      } else {
+        loadMoreBtn.textContent = 'Больше нет проектов';
+        loadMoreBtn.disabled = true;
+        setTimeout(() => {
+          loadMoreBtn.style.display = 'none';
+        }, 1000);
       }
+
+      loadMoreBtn.textContent = 'Загрузить ещё';
     } catch (error) {
       console.error('Ошибка при загрузке проектов:', error);
       loadMoreBtn.textContent = 'Ошибка загрузки';
