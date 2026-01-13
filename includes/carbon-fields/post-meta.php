@@ -127,7 +127,7 @@ Container::make('post_meta', 'Дополнительные поля')
 ->add_tab('Внутренняя страница', [
     Field::make('image', 'service_inner_img', 'Изображение в первом блоке'),
     Field::make('rich_text', 'service_inner_text', 'Текст под изображением'),
-    Field::make('text', 'service_inner_btn', 'Текст кнопки'),
+    Field::make('text', 'service_inner_btn', 'Текст кнопки')->set_help_text('По умолчанию "Заказать услугу"'),
     Field::make('complex', 'service_stats', 'Пункты статистики')
     ->add_fields([
         Field::make('text', 'title', 'Заголовок')->set_width(50),

@@ -3,7 +3,7 @@
     <?php 
         get_template_part('template-parts/service-page/hero'); 
         get_template_part('template-parts/service-page/games'); 
-        // <!-- @@include('./services/catalog.html') -->
+        get_template_part('template-parts/service-page/catalog');
     ?>
 </main>
 <?php get_footer(); ?>
