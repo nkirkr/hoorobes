@@ -119,14 +119,67 @@ export function initBrief() {
     }
 
     if (submitButton) {
-      submitButton.addEventListener("click", () => {
+      submitButton.addEventListener("click", async (e) => {
+        e.preventDefault();
+        
         if (!submitButton.disabled) {
-          // Отправка формы
-          console.log("Форма отправлена!");
-          // TODO: Здесь будет логика отправки данных на сервер
+          // Собираем данные формы
+          const formData = new FormData();
+          formData.append('action', 'submit_brief_form');
+          formData.append('nonce', themeData.nonce);
           
-          // Переход на слайд завершения
-          showSlide(6);
+          // Собираем выбранные услуги
+          const selectedServices = Array.from(selectedOptions).join(', ');
+          formData.append('service', selectedServices);
+          
+          // Описание проекта
+          const projectDescription = textarea ? textarea.value : '';
+          formData.append('project_description', projectDescription);
+          
+          // Выбранный стиль
+          const checkedRadio = Array.from(radioInputs).find(radio => radio.checked);
+          const selectedStyle = checkedRadio ? checkedRadio.value : '';
+          formData.append('style', selectedStyle);
+          
+          // Контактные данные
+          const clientName = nameInput ? nameInput.value : '';
+          const clientEmail = emailInput ? emailInput.value : '';
+          const clientMessage = messageInput ? messageInput.value : '';
+          const contactMethod = modal.querySelector('input[name="contact_method"]:checked');
+          const contactMethodValue = contactMethod ? contactMethod.value : 'email';
+          
+          formData.append('client_name', clientName);
+          formData.append('client_email', clientEmail);
+          formData.append('client_message', clientMessage);
+          formData.append('contact_method', contactMethodValue);
+          
+          // Показываем состояние загрузки
+          const originalText = submitButton.textContent;
+          submitButton.textContent = 'Отправка...';
+          submitButton.disabled = true;
+          
+          try {
+            const response = await fetch(themeData.ajaxUrl, {
+              method: 'POST',
+              body: formData,
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+              // Переход на слайд завершения
+              showSlide(6);
+            } else {
+              alert('Ошибка при отправке: ' + (result.data?.message || 'Попробуйте позже'));
+              submitButton.textContent = originalText;
+              submitButton.disabled = false;
+            }
+          } catch (error) {
+            console.error('Ошибка при отправке формы:', error);
+            alert('Произошла ошибка при отправке. Попробуйте позже.');
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+          }
         }
       });
     }
@@ -135,7 +188,7 @@ export function initBrief() {
   // Выбор опций
   options.forEach((option) => {
     option.addEventListener("click", () => {
-      const optionValue = option.dataset.option;
+      const optionValue = option.textContent.trim(); // Используем текст кнопки вместо data-option
 
       if (option.classList.contains("active")) {
         option.classList.remove("active");

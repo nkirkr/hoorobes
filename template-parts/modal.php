@@ -21,6 +21,7 @@
     </button>
 
     <!-- Слайдер -->
+    <form id="briefForm" class="modal__form-brief">
     <div class="modal__slider">
       <!-- Слайд 1: Приветствие -->
       <div class="modal__slide modal__slide--active" data-slide="1">
@@ -28,13 +29,14 @@
           <!-- Левая часть - текст и кнопка -->
           <div class="modal__left">
             <h2 class="modal__title">
-              Заполним небольшой бриф перед началом
+              <?php echo esc_html(carbon_get_theme_option('brief_welcome_title')); ?>
             </h2>
             <button
+              type="button"
               class="modal__button modal__button--start"
               aria-label="Начать заполнение брифа"
             >
-              Начать
+              <?php echo esc_html(carbon_get_theme_option('brief_welcome_button')); ?>
             </button>
           </div>
 
@@ -59,42 +61,24 @@
 
           <!-- Заголовок с иконкой -->
           <div class="modal__header">
-            <h2 class="modal__question-title">Какая услуга вас интересует?</h2>
-            <button class="modal__help" aria-label="Помощь" title="Помощь">
+            <h2 class="modal__question-title"><?php echo esc_html(carbon_get_theme_option('brief_q1_title')); ?></h2>
+            <button type="button" class="modal__help" aria-label="Помощь" title="Помощь">
               <img src="<?php echo esc_url( get_template_directory_uri() . '/build/img/svgicons/modal/help.svg' ); ?>" alt="?" />
             </button>
           </div>
 
           <!-- Grid кнопок выбора -->
           <div class="modal__options">
-            <button class="modal__option" data-option="game">
-              Разработка игры
-            </button>
-            <button class="modal__option" data-option="design">Дизайн</button>
-            <button class="modal__option" data-option="animation">
-              Анимация
-            </button>
-            <button class="modal__option" data-option="modeling">
-              3D моделирование
-            </button>
-            <button class="modal__option" data-option="consulting">
-              Консультация
-            </button>
-            <button class="modal__option" data-option="support">
-              Поддержка
-            </button>
-            <button class="modal__option" data-option="marketing">
-              Маркетинг
-            </button>
-            <button class="modal__option" data-option="sound">Звук</button>
-            <button class="modal__option" data-option="story">Сюжет</button>
-            <button class="modal__option" data-option="optimization">
-              Оптимизация
-            </button>
-            <button class="modal__option" data-option="testing">
-              Тестирование
-            </button>
-            <button class="modal__option" data-option="other">Другое</button>
+            <?php 
+            $q1_options = carbon_get_theme_option('brief_q1_options');
+            if (!empty($q1_options)) :
+                foreach ($q1_options as $option) : ?>
+                    <button type="button" class="modal__option" data-option="<?php echo esc_attr($option['slug']); ?>">
+                        <?php echo esc_html($option['label']); ?>
+                    </button>
+                <?php endforeach;
+            endif;
+            ?>
           </div>
 
           <!-- Прогресс-бар и навигация -->
@@ -110,10 +94,11 @@
             </div>
 
             <div class="modal__navigation">
-              <button class="modal__nav-button modal__nav-button--back">
+              <button type="button" class="modal__nav-button modal__nav-button--back">
                 <img src="<?php echo esc_url( get_template_directory_uri() . '/build/img/svgicons/modal/back.svg' ); ?>" alt="Назад" />
               </button>
               <button
+                type="button"
                 class="modal__nav-button modal__nav-button--next"
                 disabled
               >
@@ -134,8 +119,8 @@
 
           <!-- Заголовок с иконкой -->
           <div class="modal__header">
-            <h2 class="modal__question-title">Опишите ваш проект</h2>
-            <button class="modal__help" aria-label="Помощь" title="Помощь">
+            <h2 class="modal__question-title"><?php echo esc_html(carbon_get_theme_option('brief_q2_title')); ?></h2>
+            <button type="button" class="modal__help" aria-label="Помощь" title="Помощь">
               <img src="<?php echo esc_url( get_template_directory_uri() . '/build/img/svgicons/modal/help.svg' ); ?>" alt="?" />
             </button>
           </div>
@@ -143,8 +128,9 @@
           <!-- Textarea для текста -->
           <div class="modal__textarea-wrapper">
             <textarea
+              name="project_description"
               class="modal__textarea"
-              placeholder="Напишите сообщение"
+              placeholder="<?php echo esc_attr(carbon_get_theme_option('brief_q2_placeholder')); ?>"
               rows="10"
             ></textarea>
           </div>
@@ -162,10 +148,11 @@
             </div>
 
             <div class="modal__navigation">
-              <button class="modal__nav-button modal__nav-button--back">
+              <button type="button" class="modal__nav-button modal__nav-button--back">
                 <img src="<?php echo esc_url( get_template_directory_uri() . '/build/img/svgicons/modal/back.svg' ); ?>" alt="Назад" />
               </button>
               <button
+                type="button"
                 class="modal__nav-button modal__nav-button--next"
                 disabled
               >
@@ -186,49 +173,28 @@
 
           <!-- Заголовок с иконкой -->
           <div class="modal__header">
-            <h2 class="modal__question-title">Выберите стиль</h2>
-            <button class="modal__help" aria-label="Помощь" title="Помощь">
+            <h2 class="modal__question-title"><?php echo esc_html(carbon_get_theme_option('brief_q3_title')); ?></h2>
+            <button type="button" class="modal__help" aria-label="Помощь" title="Помощь">
               <img src="<?php echo esc_url( get_template_directory_uri() . '/build/img/svgicons/modal/help.svg' ); ?>" alt="?" />
             </button>
           </div>
 
           <!-- Список radio опций -->
           <div class="modal__radio-options">
-            <label class="modal__radio-option">
-              <input type="radio" name="style" class="modal__radio-input" />
-              <span class="modal__radio-button">
-                <span class="modal__radio-text">Реалистичный</span>
-                <span class="modal__radio-circle"></span>
-              </span>
-            </label>
-            <label class="modal__radio-option">
-              <input type="radio" name="style" class="modal__radio-input" />
-              <span class="modal__radio-button">
-                <span class="modal__radio-text">Мультяшный</span>
-                <span class="modal__radio-circle"></span>
-              </span>
-            </label>
-            <label class="modal__radio-option">
-              <input type="radio" name="style" class="modal__radio-input" />
-              <span class="modal__radio-button">
-                <span class="modal__radio-text">Пиксельный</span>
-                <span class="modal__radio-circle"></span>
-              </span>
-            </label>
-            <label class="modal__radio-option">
-              <input type="radio" name="style" class="modal__radio-input" />
-              <span class="modal__radio-button">
-                <span class="modal__radio-text">Минималистичный</span>
-                <span class="modal__radio-circle"></span>
-              </span>
-            </label>
-            <label class="modal__radio-option">
-              <input type="radio" name="style" class="modal__radio-input" />
-              <span class="modal__radio-button">
-                <span class="modal__radio-text">Другой</span>
-                <span class="modal__radio-circle"></span>
-              </span>
-            </label>
+            <?php 
+            $q3_options = carbon_get_theme_option('brief_q3_options');
+            if (!empty($q3_options)) :
+                foreach ($q3_options as $option) : ?>
+                    <label class="modal__radio-option">
+                      <input type="radio" name="style" value="<?php echo esc_attr($option['label']); ?>" class="modal__radio-input" />
+                      <span class="modal__radio-button">
+                        <span class="modal__radio-text"><?php echo esc_html($option['label']); ?></span>
+                        <span class="modal__radio-circle"></span>
+                      </span>
+                    </label>
+                <?php endforeach;
+            endif;
+            ?>
           </div>
 
           <!-- Прогресс-бар и навигация -->
@@ -244,10 +210,11 @@
             </div>
 
             <div class="modal__navigation">
-              <button class="modal__nav-button modal__nav-button--back">
+              <button type="button" class="modal__nav-button modal__nav-button--back">
                 <img src="<?php echo esc_url( get_template_directory_uri() . '/build/img/svgicons/modal/back.svg' ); ?>" alt="Назад" />
               </button>
               <button
+                type="button"
                 class="modal__nav-button modal__nav-button--next"
                 disabled
               >
@@ -268,8 +235,8 @@
 
           <!-- Заголовок с иконкой -->
           <div class="modal__header">
-            <h2 class="modal__question-title">Остался последний шаг</h2>
-            <button class="modal__help" aria-label="Помощь" title="Помощь">
+            <h2 class="modal__question-title"><?php echo esc_html(carbon_get_theme_option('brief_q4_title')); ?></h2>
+            <button type="button" class="modal__help" aria-label="Помощь" title="Помощь">
               <img src="<?php echo esc_url( get_template_directory_uri() . '/build/img/svgicons/modal/help.svg' ); ?>" alt="?" />
             </button>
           </div>
@@ -279,36 +246,41 @@
             <div class="modal__form-fields">
               <input
                 type="text"
+                name="client_name"
                 class="modal__input"
-                placeholder="Имя"
+                placeholder="<?php echo esc_attr(carbon_get_theme_option('brief_q4_name_placeholder')); ?>"
                 data-name-input
+                required
               />
               <input
                 type="email"
+                name="client_email"
                 class="modal__input"
-                placeholder="Email"
+                placeholder="<?php echo esc_attr(carbon_get_theme_option('brief_q4_email_placeholder')); ?>"
                 data-email-input
+                required
               />
             </div>
 
             <div class="modal__contact-methods">
               <label class="modal__contact-method">
-                <input type="radio" name="contact" value="email" checked />
+                <input type="radio" name="contact_method" value="email" checked />
                 <span class="modal__contact-label">Email</span>
               </label>
               <label class="modal__contact-method">
-                <input type="radio" name="contact" value="telegram" />
+                <input type="radio" name="contact_method" value="telegram" />
                 <span class="modal__contact-label">Telegram</span>
               </label>
               <label class="modal__contact-method">
-                <input type="radio" name="contact" value="whatsapp" />
+                <input type="radio" name="contact_method" value="whatsapp" />
                 <span class="modal__contact-label">Whatsapp</span>
               </label>
             </div>
 
             <textarea
+              name="client_message"
               class="modal__textarea modal__textarea--large"
-              placeholder="Напишите сообщение"
+              placeholder="<?php echo esc_attr(carbon_get_theme_option('brief_q4_message_placeholder')); ?>"
               rows="6"
               data-message-input
             ></textarea>
@@ -331,6 +303,7 @@
                 <img src="<?php echo esc_url( get_template_directory_uri() . '/build/img/svgicons/modal/back.svg' ); ?>" alt="Назад" />
               </button>
               <button
+                type="submit"
                 class="modal__nav-button modal__nav-button--submit"
                 disabled
               >
@@ -346,11 +319,10 @@
         <div class="modal__content modal__content--success">
           <div class="modal__left modal__left--success">
             <h2 class="modal__title modal__title--success">
-              Ваша заявка отправлена
+              <?php echo esc_html(carbon_get_theme_option('brief_success_title')); ?>
             </h2>
             <p class="modal__description">
-              Мы с вами свяжемся в течении 20 минут. Если у вас остались
-              вопросы, то напишите нам в удобной для вам мессенджер
+              <?php echo esc_html(carbon_get_theme_option('brief_success_description')); ?>
             </p>
             <div class="modal__social">
               <a
@@ -383,6 +355,7 @@
         </div>
       </div>
     </div>
+    </form>
   </div>
 </div>
 
