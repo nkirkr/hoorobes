@@ -13,6 +13,8 @@ Container::make('post_meta', __('Информация об услуге', 'ercog
         Field::make('text', 'upper_title', 'Текст над заголовком'),
         Field::make('text', 'title', 'Заголовок')->set_help_text('Чтобы выделить слово, оберните его в тег &lt;span&gt;{слово}&lt;/span&gt;'),
         Field::make('text', 'subtitle', 'Подзаголовок'),
+        Field::make('text', 'hero_btn_1', 'Кнопка 1 – текст')->set_width(50),
+        Field::make('text', 'hero_btn_2', 'Кнопка 2 – текст')->set_width(50),
         Field::make('complex', 'projects_cards', 'Карточки проектов')
         ->add_fields([
             Field::make('image', 'card', 'Карточка')
@@ -62,6 +64,7 @@ Container::make('post_meta', __('Информация об услуге', 'ercog
         Field::make('text', 'about_title', 'Заголовок')->set_width(33),
         Field::make('textarea', 'about_paragraph_1', 'Текст – абзац 1')->set_width(33),
         Field::make('textarea', 'about_paragraph_2', 'Текст – абзац 2')->set_width(33),
+        Field::make('text', 'about_btn', 'Текст кнопки'),
         Field::make('complex', 'about_list', 'Пункты статистики')
         ->add_fields([
             Field::make('text', 'title', 'Заголовок')->set_width(50),
@@ -122,7 +125,14 @@ Container::make('post_meta', 'Дополнительные поля')
     Field::make('text', 'service_btn_text', 'Текст кнопки')->set_help_text('По умолчанию "Подробнее"'),
 ])
 ->add_tab('Внутренняя страница', [
-    Field::make('image', 'service_inner_img', 'Изображение'),
+    Field::make('image', 'service_inner_img', 'Изображение в первом блоке'),
+    Field::make('rich_text', 'service_inner_text', 'Текст под изображением'),
+    Field::make('text', 'service_inner_btn', 'Текст кнопки'),
+    Field::make('complex', 'service_stats', 'Пункты статистики')
+    ->add_fields([
+        Field::make('text', 'title', 'Заголовок')->set_width(50),
+        Field::make('text', 'descr', 'Описание')->set_width(50),
+    ])->set_max(4),
 ])
 ->add_tab('Общее', [
     Field::make('text', 'service_price', 'Цена'),
@@ -148,6 +158,7 @@ Container::make('post_meta', 'Дополнительные поля')
 ])
 ->add_tab('О игре', [
     Field::make('rich_text', 'case_descr', 'Описание'),
+    Field::make('text', 'case_btn', 'Текст кнопки')->set_help_text('По умолчанию "Играть в игру"'),
     Field::make('text', 'case_link', 'Ссылка на игру'),
 ])
 ->add_tab('Блок со статистикой', [
@@ -160,6 +171,7 @@ Container::make('post_meta', 'Дополнительные поля')
 ->add_tab('Блок с баннером', [
     Field::make('image', 'case_banner_img', 'Изображение'),
     Field::make('rich_text', 'case_banner_descr', 'Описание'),
+    Field::make('text', 'case_banner_btn', 'Текст кнопки')->set_help_text('По умолчанию "Играть в игру"'),
 ])
 ->add_tab('Слайдер с изображениями', [
     Field::make('complex', 'case_slider', 'Слайдер')

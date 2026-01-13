@@ -109,7 +109,7 @@
           class="about__button button"
           aria-label="Начать проект"
         >
-          Начать проект
+          <?php echo esc_html( carbon_get_the_post_meta('about_btn') ); ?>
         </a>
       </div>
     </div>

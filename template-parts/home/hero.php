@@ -42,14 +42,14 @@
           class="hero__button button button--primary"
           aria-label="Начать проект"
         >
-          <span class="button__text">Начать проект</span>
+          <span class="button__text"><?php echo esc_html( carbon_get_the_post_meta('hero_btn_1') ); ?></span>
         </a>
         <a
           href="selection.html"
           class="hero__button button button--secondary"
           aria-label="Подобрать услугу"
         >
-          <span class="button__text">Подобрать</span>
+          <span class="button__text"><?php echo esc_html( carbon_get_the_post_meta('hero_btn_2') ); ?></span>
         </a>
       </div>
 

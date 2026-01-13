@@ -27,4 +27,7 @@ get_header();
     </div>
 </main>
 
-<?php get_footer(); ?>
+<?php 
+get_template_part('template-parts/calculator/result-modal'); 
+get_footer(); 
+?>

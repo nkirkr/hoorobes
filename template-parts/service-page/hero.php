@@ -32,57 +32,47 @@
 
       <div class="service-page-hero__image">
         <img
-          src="./img/service-page/hero.png"
-          alt="Скриншот игры"
+          src="<?php echo esc_url( wp_get_attachment_url( carbon_get_the_post_meta('service_inner_img') ) ); ?>"
+          alt="<?php the_title_attribute(); ?>"
           loading="lazy"
         />
       </div>
     </div>
 
-    <p class="service-page-hero__description">
-      Hooroobes — студия разработки игр нового поколения. Мы создаём авторские
-      миры с уникальной визуальной ДНК и механиками, от которых невозможно
-      оторваться. От атмосферных инди-проектов до амбициозных тайтлов, готовых
-      ворваться в глобальные топы.
-    </p>
+    <div class="service-page-hero__description">
+      <?php echo wpautop( carbon_get_the_post_meta( 'service_inner_text' ) ); ?>
+    </div>
 
+    <?php
+        $btn = carbon_get_the_post_meta('service_inner_btn');
+        $btn_text = !empty($btn) ? $btn : 'Заказать услугу';
+    ?>
     <button
       type="button"
       class="service-page-hero__button button"
       data-modal-open="briefModal"
       aria-label="Заказать услугу"
     >
-      Заказать услугу
+      <?php echo esc_html($btn_text); ?>
     </button>
 
-    <div class="service-page-hero__stats">
-      <div class="service-page-hero__stat">
-        <p class="service-page-hero__stat-number">32,9 тыс</p>
-        <p class="service-page-hero__stat-text">
-          Игроки которые играют прямо сейчас
-        </p>
+    <?php 
+    $service_stats = carbon_get_the_post_meta('service_stats');
+      if (!empty($service_stats)) : 
+    ?>
+      <div class="service-page-hero__stats">
+        <?php foreach($service_stats as $service_item): 
+          $title = $service_item['title'];
+          $descr = $service_item['descr'];
+        ?>
+          <div class="service-page-hero__stat">
+            <p class="service-page-hero__stat-number"><?php echo esc_html($title); ?></p>
+            <p class="service-page-hero__stat-text">
+              <?php echo esc_html($descr); ?>
+            </p>
+          </div>
+        <?php endforeach; ?>
       </div>
-
-      <div class="service-page-hero__stat">
-        <p class="service-page-hero__stat-number">32,9 тыс</p>
-        <p class="service-page-hero__stat-text">
-          Игроки которые играют прямо сейчас
-        </p>
-      </div>
-
-      <div class="service-page-hero__stat">
-        <p class="service-page-hero__stat-number">32,9 тыс</p>
-        <p class="service-page-hero__stat-text">
-          Игроки которые играют прямо сейчас
-        </p>
-      </div>
-
-      <div class="service-page-hero__stat">
-        <p class="service-page-hero__stat-number">32,9 тыс</p>
-        <p class="service-page-hero__stat-text">
-          Игроки которые играют прямо сейчас
-        </p>
-      </div>
-    </div>
+    <?php endif; ?>
   </div>
 </section>

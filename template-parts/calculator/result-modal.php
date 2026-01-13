@@ -16,7 +16,7 @@
       aria-label="Закрыть модальное окно"
     >
       <span class="modal__close-icon">
-        <img src="./img/svgicons/modal/cross.svg" alt="Закрыть" />
+        <img src="<?php echo esc_url( get_template_directory_uri() . '/build/img/svgicons/modal/cross.svg' ); ?>" alt="Закрыть" />
       </span>
     </button>
 
@@ -46,7 +46,7 @@
       <!-- Правая часть - изображение -->
       <div class="modal__right modal__right--result">
         <img
-          src="./img/modal/main.png"
+          src="<?php echo esc_url( get_template_directory_uri() . '/build/img/modal/main.png' ); ?>"
           alt="Иллюстрация"
           class="modal__image"
         />
