@@ -45,7 +45,7 @@
           <span class="button__text"><?php echo esc_html( carbon_get_the_post_meta('hero_btn_1') ); ?></span>
         </a>
         <a
-          href="selection.html"
+          href="<?php echo the_permalink(79); ?>"
           class="hero__button button button--secondary"
           aria-label="Подобрать услугу"
         >
@@ -60,7 +60,11 @@
             <?php
               $cards = carbon_get_the_post_meta('projects_cards');
               
-              if (!empty($cards)) : ?>
+              if (!empty($cards)) : 
+                if (count($cards) === 5) {
+                  $cards[] = $cards[2]; 
+                }
+              ?>
 
               <?php foreach ($cards as $index => $card) : 
                   $image = wp_get_attachment_url($card['card']);

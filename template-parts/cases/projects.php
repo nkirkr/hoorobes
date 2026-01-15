@@ -117,18 +117,13 @@
 
       if ($cases_query->have_posts()) :
           while ($cases_query->have_posts()) : $cases_query->the_post();
-              // Получаем категории поста
               $terms = get_the_terms(get_the_ID(), 'case_type');
               $category_slug = '';
               if ($terms && !is_wp_error($terms)) {
                   $category_slug = $terms[0]->slug;
               }
               
-              // Получаем изображение
-              $thumbnail_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
-              if (!$thumbnail_url) {
-                  $thumbnail_url = THEME_URI . '/build/img/projects/project.png';
-              }
+              $thumbnail_url = wp_get_attachment_url(carbon_get_the_post_meta('case_preview_img'));
               ?>
               <article class="project-card" data-category="<?php echo esc_attr($category_slug); ?>">
                 <img

@@ -66,5 +66,8 @@ initServicesSlider();
 import { initServiceGamesSlider } from './pages/service-games-slider.js';
 initServiceGamesSlider();
 
+import { initServiceGamesLoadMore } from './pages/service-games-load-more.js';
+initServiceGamesLoadMore();
+
 import { initSelectionParams } from './pages/selection-params.js';
 initSelectionParams();

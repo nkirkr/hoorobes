@@ -91,6 +91,52 @@ Container::make('theme_options', __('Общие настройки', 'ercogroup-
         
         Field::make('textarea', 'brief_success_description', 'Описание успешной отправки')
             ->set_default_value('Мы с вами свяжемся в течении 20 минут. Если у вас остались вопросы, то напишите нам в удобной для вам мессенджер'),
+    ])
+    // В theme-options.php добавляем вкладку "Калькулятор"
+
+->add_tab('Калькулятор – Услуги', [
+    // Список услуг, к которым привязываются баллы
+    Field::make('complex', 'calc_services', 'Услуги калькулятора')
+        ->add_fields([
+            Field::make('text', 'name', 'Название услуги (для отображения)'),
+            Field::make('text', 'slug', 'Ключ (латиницей)'),
+            Field::make('textarea', 'description', 'Описание услуги'),
+            Field::make('association', 'service_link', 'Связь с услугой на сайте')
+                ->set_types([['type' => 'post', 'post_type' => 'services']])
+        ])
+        ->set_default_value([
+            ['name' => 'Building', 'slug' => 'building'],
+            ['name' => 'Scripting', 'slug' => 'scripting'],
+            ['name' => 'Modeling', 'slug' => 'modeling'],
+            ['name' => 'Animating', 'slug' => 'animating'],
+            ['name' => 'Graphic Design', 'slug' => 'graphic_design'],
+            ['name' => 'Clothing & Accessories', 'slug' => 'clothing'],
+            ['name' => 'Interface', 'slug' => 'interface'],
+            ['name' => 'SFX', 'slug' => 'sfx'],
+            ['name' => 'VFX', 'slug' => 'vfx'],
+        ])
+])
+    ->add_tab('Калькулятор – Вопросы', [
+        Field::make('complex', 'calc_questions', 'Вопросы')
+            ->add_fields([
+                Field::make('text', 'question', 'Текст вопроса'),
+                Field::make('complex', 'answers', 'Варианты ответов')
+                    ->add_fields([
+                        Field::make('text', 'text', 'Текст ответа'),
+                        Field::make('select', 'service', 'Услуга (+1 балл)')
+                            ->set_options([
+                                'building' => 'Building',
+                                'scripting' => 'Scripting',
+                                'modeling' => 'Modeling',
+                                'animating' => 'Animating',
+                                'graphic_design' => 'Graphic Design',
+                                'clothing' => 'Clothing & Accessories',
+                                'interface' => 'Interface',
+                                'sfx' => 'SFX',
+                                'vfx' => 'VFX',
+                            ])
+                    ])
+            ])
     ]);
 
 

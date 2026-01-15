@@ -24,23 +24,24 @@
     <div class="modal__content modal__content--result">
       <!-- Левая часть - текст и кнопка -->
       <div class="modal__left modal__left--result">
+        <p class="modal__subtitle modal__subtitle--result">Вам подойдёт услуга:</p>
         <h2 class="modal__title modal__title--result" id="selectionResultTitle">
           Название услуги
         </h2>
         <p class="modal__description modal__description--result" id="selectionResultDescription">
-          Текст текст текст Текст текст текстТекст текст текстТекст текст
-          текстТекст текст текстТекст текст текстТекст текст текстТекст текст
-          текст
+          Описание услуги будет отображено здесь
         </p>
-        <button
-          class="modal__button modal__button--result"
-          data-modal-open="briefModal"
-          data-brief-direct="5"
-          data-modal-close
-          aria-label="Заказать услугу"
-        >
-          Заказать
-        </button>
+        <div class="modal__buttons modal__buttons--result">
+          <button
+            class="modal__button modal__button--result modal__button--secondary"
+            data-modal-open="briefModal"
+            data-brief-direct="5"
+            data-modal-close
+            aria-label="Заказать услугу"
+          >
+            Заказать
+          </button>
+        </div>
       </div>
 
       <!-- Правая часть - изображение -->
@@ -54,4 +55,3 @@
     </div>
   </div>
 </div>
-

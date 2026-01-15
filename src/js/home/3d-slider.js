@@ -1,5 +1,6 @@
 /**
  * 3D слайдер с эффектом coverflow
+ * Логика как в примере Materialize CSS carousel
  */
 
 import Swiper from "swiper/bundle";
@@ -10,6 +11,74 @@ export function init3DSlider() {
     return;
   }
 
+  // Функция для обновления стилей слайдов
+  function updateSlidesStyles(swiper) {
+    const slides = swiper.slides;
+
+    slides.forEach((slide) => {
+      // Округляем progress до целого для симметрии
+      const p = Math.round(slide.progress);
+
+      let rotateZ = 0;
+      let scale = 1;
+      let opacity = 1;
+      let zIndex = 10;
+
+      // Центральная
+      if (p === 0) {
+        rotateZ = 0;
+        scale = 1;
+        zIndex = 40;
+        opacity = 1;
+      }
+      // Первая слева
+      else if (p === -1) {
+        rotateZ = 6;
+        scale = 0.95;
+        zIndex = 30;
+        opacity = 1;
+      }
+      // Первая справа
+      else if (p === 1) {
+        rotateZ = -6;
+        scale = 0.95;
+        zIndex = 30;
+        opacity = 1;
+      }
+      // Вторая слева
+      else if (p === -2) {
+        rotateZ = 4;
+        scale = 0.9;
+        zIndex = 20;
+        opacity = 1;
+      }
+      // Вторая справа
+      else if (p === 2) {
+        rotateZ = -4;
+        scale = 0.9;
+        zIndex = 20;
+        opacity = 1;
+      }
+      // ВСЁ ОСТАЛЬНОЕ — СКРЫВАЕМ
+      else {
+        opacity = 0;
+        scale = 0.8;
+        zIndex = 1;
+      }
+
+      slide.style.opacity = opacity;
+      slide.style.filter = 'none';
+      slide.style.zIndex = zIndex;
+
+      // Удаляем старые rotateZ и scale, добавляем новые
+      slide.style.transform =
+        slide.style.transform
+          .replace(/rotateZ\(.*?\)/g, "")
+          .replace(/scale\(.*?\)/g, "") +
+        ` rotateZ(${rotateZ}deg) scale(${scale})`;
+    });
+  }
+
   const heroSwiper = new Swiper(".hero-swiper", {
     effect: "coverflow",
     grabCursor: true,
@@ -18,8 +87,9 @@ export function init3DSlider() {
     spaceBetween: 0,
     speed: 600,
     loop: true,
-    direction: "horizontal", // Явно указываем горизонтальное направление
-    watchSlidesProgress: true, // ВАЖНО: для правильной работы progress в loop
+    watchSlidesProgress: true,
+    preloadImages: true,
+    updateOnWindowResize: true,
 
     // Поддержка тачпада и жестов
     simulateTouch: true,
@@ -34,7 +104,7 @@ export function init3DSlider() {
     },
 
     coverflowEffect: {
-      rotate: 0, // Убираем поворот по Y
+      rotate: 0,
       stretch: 60,
       depth: 200,
       modifier: 1.2,
@@ -42,10 +112,10 @@ export function init3DSlider() {
     },
 
     autoplay: {
-      delay: 5000,
+      delay: 3000,
       disableOnInteraction: false,
       pauseOnMouseEnter: true,
-      reverseDirection: true, // Движение вправо (карточки справа становятся центральными)
+      reverseDirection: true,
     },
 
     keyboard: {
@@ -53,80 +123,25 @@ export function init3DSlider() {
     },
 
     // Жёстко ограничиваем видимые слайды по нормализованному progress
-    // Показываем 6 карточек: 3 слева, центральная, 3 справа
+    // Показываем 5 карточек: 2 слева, центральная, 2 справа
     on: {
+      init: function() {
+        // Принудительно обновляем стили при инициализации
+        this.update();
+        setTimeout(() => {
+          updateSlidesStyles(this);
+        }, 100);
+      },
+      ready: function() {
+        // Обновляем стили когда Swiper готов
+        updateSlidesStyles(this);
+      },
       setTranslate: function() {
-        const swiper = this;
-        const slides = swiper.slides;
-
-        slides.forEach((slide) => {
-          // Округляем progress до целого для симметрии
-          const p = Math.round(slide.progress);
-
-          let rotateZ = 0;
-          let scale = 1;
-          let opacity = 1;
-          let zIndex = 10;
-
-          // Центральная
-          if (p === 0) {
-            rotateZ = 0;
-            scale = 1;
-            zIndex = 40;
-          }
-          // Первая слева
-          else if (p === -1) {
-            rotateZ = 6;
-            scale = 0.95;
-            zIndex = 30;
-          }
-          // Первая справа
-          else if (p === 1) {
-            rotateZ = -6;
-            scale = 0.95;
-            zIndex = 30;
-          }
-          // Вторая слева
-          else if (p === -2) {
-            rotateZ = 4;
-            scale = 0.9;
-            zIndex = 20;
-          }
-          // Вторая справа
-          else if (p === 2) {
-            rotateZ = -4;
-            scale = 0.9;
-            zIndex = 20;
-          }
-          // Третья слева
-          else if (p === -3) {
-            rotateZ = 2;
-            scale = 0.85;
-            zIndex = 10;
-          }
-          // Третья справа
-          else if (p === 3) {
-            rotateZ = -2;
-            scale = 0.85;
-            zIndex = 10;
-          }
-          // ВСЁ ОСТАЛЬНОЕ — СКРЫВАЕМ
-          else {
-            opacity = 0;
-            scale = 0.8;
-            zIndex = 1;
-          }
-
-          slide.style.opacity = opacity;
-          slide.style.zIndex = zIndex;
-
-          // Удаляем старые rotateZ и scale, добавляем новые
-          slide.style.transform =
-            slide.style.transform
-              .replace(/rotateZ\(.*?\)/g, "")
-              .replace(/scale\(.*?\)/g, "") +
-            ` rotateZ(${rotateZ}deg) scale(${scale})`;
-        });
+        updateSlidesStyles(this);
+      },
+      slideChangeTransitionEnd: function() {
+        // Обновляем стили после завершения перехода
+        updateSlidesStyles(this);
       },
     },
 
@@ -157,6 +172,12 @@ export function init3DSlider() {
       },
     },
   });
+
+  // Принудительно обновляем стили после полной инициализации
+  setTimeout(() => {
+    heroSwiper.update();
+    updateSlidesStyles(heroSwiper);
+  }, 200);
 
   return heroSwiper;
 }
