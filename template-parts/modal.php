@@ -22,6 +22,8 @@
 
     <!-- Слайдер -->
     <form id="briefForm" class="modal__form-brief">
+    <!-- Скрытое поле для услуги из калькулятора -->
+    <input type="hidden" name="calculator_service" id="calculatorServiceInput" />
     <div class="modal__slider">
       <!-- Слайд 1: Приветствие -->
       <div class="modal__slide modal__slide--active" data-slide="1">

@@ -132,6 +132,13 @@ export function initBrief() {
           const selectedServices = Array.from(selectedOptions).join(', ');
           formData.append('service', selectedServices);
           
+          // Читаем услугу из калькулятора из скрытого поля
+          const calculatorServiceInput = document.getElementById('calculatorServiceInput');
+          if (calculatorServiceInput && calculatorServiceInput.value) {
+            formData.append('calculator_service', calculatorServiceInput.value);
+            console.log('Отправляем услугу из калькулятора:', calculatorServiceInput.value);
+          }
+          
           // Описание проекта
           const projectDescription = textarea ? textarea.value : '';
           formData.append('project_description', projectDescription);

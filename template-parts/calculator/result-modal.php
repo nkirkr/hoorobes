@@ -36,6 +36,7 @@
             class="modal__button modal__button--result modal__button--secondary"
             data-modal-open="briefModal"
             data-brief-direct="5"
+            data-selected-service=""
             data-modal-close
             aria-label="Заказать услугу"
           >

@@ -133,6 +133,12 @@ Container::make('post_meta', 'Дополнительные поля')
         Field::make('text', 'title', 'Заголовок')->set_width(50),
         Field::make('text', 'descr', 'Описание')->set_width(50),
     ])->set_max(4),
+    Field::make('complex', 'service_carousel', 'Карусель с играми')
+    ->add_fields([
+        Field::make('text', 'title', 'Заголовок')->set_width(33),
+        Field::make('image', 'image', 'Картинка')->set_width(33),
+        Field::make('text', 'link', 'Ссылка')->set_width(33),
+    ]),
 ])
 ->add_tab('Общее', [
     Field::make('text', 'service_price', 'Цена'),

@@ -23,7 +23,7 @@ Container::make('theme_options', __('Общие настройки', 'ercogroup-
         Field::make('file', 'obrabotka', 'Согласие на обработку персональных данных')
             ->set_value_type('url'),
     ])
-    ->add_tab('Бриф – 1', [
+    ->add_tab('Бриф', [
         Field::make('text', 'brief_welcome_title', 'Заголовок приветствия')
             ->set_default_value('Заполним небольшой бриф перед началом'),
         
@@ -94,15 +94,12 @@ Container::make('theme_options', __('Общие настройки', 'ercogroup-
     ])
     // В theme-options.php добавляем вкладку "Калькулятор"
 
-->add_tab('Калькулятор – Услуги', [
+->add_tab('Подбор услуги – Услуги', [
     // Список услуг, к которым привязываются баллы
     Field::make('complex', 'calc_services', 'Услуги калькулятора')
         ->add_fields([
             Field::make('text', 'name', 'Название услуги (для отображения)'),
             Field::make('text', 'slug', 'Ключ (латиницей)'),
-            Field::make('textarea', 'description', 'Описание услуги'),
-            Field::make('association', 'service_link', 'Связь с услугой на сайте')
-                ->set_types([['type' => 'post', 'post_type' => 'services']])
         ])
         ->set_default_value([
             ['name' => 'Building', 'slug' => 'building'],
@@ -116,7 +113,7 @@ Container::make('theme_options', __('Общие настройки', 'ercogroup-
             ['name' => 'VFX', 'slug' => 'vfx'],
         ])
 ])
-    ->add_tab('Калькулятор – Вопросы', [
+    ->add_tab('Подбор услуги – Вопросы', [
         Field::make('complex', 'calc_questions', 'Вопросы')
             ->add_fields([
                 Field::make('text', 'question', 'Текст вопроса'),

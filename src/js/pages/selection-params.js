@@ -160,6 +160,8 @@ function updateResultModal(result) {
   const titleElement = document.getElementById('selectionResultTitle');
   const descriptionElement = document.getElementById('selectionResultDescription');
   const linkElement = document.getElementById('selectionResultLink');
+  const orderButton = document.querySelector('#selectionResultModal .modal__button--result');
+  const calculatorServiceInput = document.getElementById('calculatorServiceInput');
   
   if (titleElement) {
     titleElement.textContent = result.name;
@@ -177,5 +179,16 @@ function updateResultModal(result) {
     } else {
       linkElement.style.display = 'inline-flex';
     }
+  }
+  
+  // Сохраняем название услуги в data-атрибуте кнопки "Заказать"
+  if (orderButton) {
+    orderButton.setAttribute('data-selected-service', result.name);
+  }
+  
+  // Заполняем скрытое поле в форме брифа
+  if (calculatorServiceInput) {
+    calculatorServiceInput.value = result.name;
+    console.log('Услуга для формы:', result.name);
   }
 }

@@ -12,7 +12,7 @@ if (!empty($services)) {
         }
         $services_data[$service['slug']] = [
             'name' => $service['name'],
-            'description' => $service['description'],
+            // 'description' => $service['description'],
             'link' => $service_link,
         ];
     }

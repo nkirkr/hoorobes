@@ -164,6 +164,7 @@ function submit_brief_form() {
     check_ajax_referer('load_more_cases_nonce', 'nonce');
     
     $service = isset($_POST['service']) ? sanitize_text_field($_POST['service']) : '';
+    $calculator_service = isset($_POST['calculator_service']) ? sanitize_text_field($_POST['calculator_service']) : '';
     $project_description = isset($_POST['project_description']) ? sanitize_textarea_field($_POST['project_description']) : '';
     $style = isset($_POST['style']) ? sanitize_text_field($_POST['style']) : '';
     $client_name = isset($_POST['client_name']) ? sanitize_text_field($_POST['client_name']) : '';
@@ -189,6 +190,9 @@ function submit_brief_form() {
     if (!empty($service)) {
         $message .= "Интересующая услуга: " . $service . "\n";
     }
+    if (!empty($calculator_service)) {
+        $message .= "Рекомендованная услуга из калькулятора: " . $calculator_service . "\n";
+    }
     if (!empty($project_description)) {
         $message .= "Описание проекта: " . $project_description . "\n";
     }
@@ -211,6 +215,7 @@ function submit_brief_form() {
     $brief_data = array(
         'date' => current_time('mysql'),
         'service' => $service,
+        'calculator_service' => $calculator_service,
         'project_description' => $project_description,
         'style' => $style,
         'client_name' => $client_name,

@@ -1,37 +1,29 @@
 <section class="service-games">
+  <?php
+  $carousel = carbon_get_the_post_meta('service_carousel');
+  if (!empty($carousel)) :
+  ?>
   <div class="service-games__slider">
     <div class="service-games__slider-track">
-      <?php
-      // Запрос для слайдера - все кейсы
-      $slider_query = new WP_Query(array(
-          'post_type' => 'cases',
-          'posts_per_page' => -1,
-          'orderby' => 'date',
-          'order' => 'DESC',
-      ));
 
-      if ($slider_query->have_posts()) :
-          while ($slider_query->have_posts()) : $slider_query->the_post();
-              $thumbnail_url = wp_get_attachment_url(carbon_get_the_post_meta('case_preview_img'));
-              $excerpt = carbon_get_the_post_meta('case_excerpt');
-              if (empty($excerpt)) {
-                  $excerpt = get_the_excerpt();
-              }
-      ?>
-        <div class="service-games__slide">
-          <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" />
+        <?php foreach ($carousel as $slide) : 
+          $image = wp_get_attachment_url( $slide['image'] );   
+          $title = $slide['title'];
+          $link = $slide['link'];
+        ?>
+
+        <a href="<?php echo esc_url($link); ?>" class="service-games__slide" target="_blank" rel="noopener noreferrer">
+          <img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" />
           <div class="service-games__slide-text">
-            <h3 class="service-games__slide-title"><?php echo esc_html(get_the_title()); ?></h3>
-            <p class="service-games__slide-desc"><?php echo esc_html($excerpt); ?></p>
+            <h3 class="service-games__slide-title"><?php echo esc_html($title); ?></h3>
           </div>
-        </div>
-      <?php
-          endwhile;
-          wp_reset_postdata();
-      endif;
-      ?>
+        </a>
+
+        <?php endforeach; ?>
+
+      </div>
     </div>
-  </div>
+    <?php endif; ?>
 
   <div class="container">
     <div class="service-games__navigation">
@@ -40,7 +32,7 @@
         aria-label="Предыдущий слайд"
       >
         <img
-          src="./img/svgicons/all/arrow-active.svg"
+          src="<?php echo esc_url( get_template_directory_uri() . '/build/img/svgicons/all/arrow-active.svg' ); ?>"
           alt=""
           aria-hidden="true"
         />
@@ -50,7 +42,7 @@
         aria-label="Следующий слайд"
       >
         <img
-          src="./img/svgicons/all/arrow-active.svg"
+          src="<?php echo esc_url( get_template_directory_uri() . '/build/img/svgicons/all/arrow-active.svg' ); ?>"
           alt=""
           aria-hidden="true"
         />
@@ -83,6 +75,7 @@
               }
       ?>
         <article class="service-games__card">
+          <a href="<?php the_permalink(); ?>" class='full-width-link'></a>
           <div class="service-games__card-image">
             <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" />
           </div>
