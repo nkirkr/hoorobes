@@ -103,14 +103,15 @@
             </div>
           
           <?php endif; ?>
-
-        <a
-          href="<?php echo the_permalink(47); ?>"
-          class="about__button button"
-          aria-label="Начать проект"
-        >
-          <?php echo esc_html( carbon_get_the_post_meta('about_btn') ); ?>
-        </a>
+        <div class="about__button-wrapper">
+          <a
+            href="<?php echo the_permalink(47); ?>"
+            class="about__button button"
+            aria-label="Начать проект"
+          >
+            <?php echo esc_html( carbon_get_the_post_meta('about_btn') ); ?>
+          </a>
+        </div>
       </div>
     </div>
   </div>

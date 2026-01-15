@@ -23,13 +23,15 @@
       </nav>
 
       <div class="footer__actions">
-        <button
-          type="button"
-          class="footer__button button"
-          data-modal-open="briefModal"
-          aria-label="Оформить заказ"
-          >Сделать заказ</button
-        >
+        <div class="footer__button-wrapper">
+          <button
+            type="button"
+            class="footer__button button"
+            data-modal-open="briefModal"
+            aria-label="Оформить заказ"
+            >Сделать заказ</button
+          >
+        </div>
         
         <button class="footer__scroll-top" aria-label="Наверх" type="button">
           <svg

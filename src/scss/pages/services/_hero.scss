@@ -85,8 +85,21 @@
     margin: 0;
   }
 
-  &__button {
+  &__button-wrapper {
     margin-top: 20px;
+    filter: drop-shadow(0 0 30px rgba(113, 82, 239, 0.55));
+    transition: filter 0.3s ease;
+
+    &:hover {
+      filter: drop-shadow(0 0 40px rgba(113, 82, 239, 0.75));
+    }
+
+    &:active {
+      filter: drop-shadow(0 0 20px rgba(113, 82, 239, 0.35));
+    }
+  }
+  
+  &__button {
     width: 180px;
     height: 50px;
   }

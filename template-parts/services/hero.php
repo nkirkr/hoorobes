@@ -14,9 +14,11 @@
 					<?php echo esc_html( carbon_get_the_post_meta('services_subtitle') ); ?>
 				</p>
 				<p class="services-hero__price"><?php echo esc_html( carbon_get_the_post_meta('services_price') ); ?></p>
-				<button type="button" class="services-hero__button button" data-modal-open="briefModal" aria-label="Заказать услугу">
-					<?php echo esc_html( carbon_get_the_post_meta('services_btn') ); ?>
-				</button>
+				<div class="services-hero__button-wrapper">
+					<button type="button" class="services-hero__button button" data-modal-open="briefModal" aria-label="Заказать услугу">
+						<?php echo esc_html( carbon_get_the_post_meta('services_btn') ); ?>
+					</button>
+				</div>
 			</div>
 
 			<div class="services-hero__image">

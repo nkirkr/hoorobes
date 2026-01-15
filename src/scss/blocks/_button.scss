@@ -36,12 +36,10 @@
 
   &:hover {
     transform: translateY(-2px);
-    filter: drop-shadow(0 0 40px rgba(113, 82, 239, 0.75));
   }
 
   &:active {
     transform: translateY(0);
-    filter: drop-shadow(0 0 20px rgba(113, 82, 239, 0.35));
   }
 
   &:focus-visible {

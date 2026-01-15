@@ -27,9 +27,11 @@
         $banner_btn = carbon_get_the_post_meta('case_banner_btn');
         $banner_btn_text = !empty($banner_btn) ? $banner_btn : 'Играть в игру';
     ?>
-    <a href="<?php echo esc_url( carbon_get_the_post_meta('case_link') ); ?>" class="game-about__button button" aria-label="Играть в игру" target="_blank" rel="noopener noreferrer">
-      <?php echo esc_html($banner_btn_text); ?>
-    </a>
+    <div class="game-about__button-wrapper">
+      <a href="<?php echo esc_url( carbon_get_the_post_meta('case_link') ); ?>" class="game-about__button button" aria-label="Играть в игру" target="_blank" rel="noopener noreferrer">
+        <?php echo esc_html($banner_btn_text); ?>
+      </a>
+    </div>
   </div>
 
 

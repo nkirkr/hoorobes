@@ -160,10 +160,19 @@
     font-size: 18px;
     line-height: 1.22;
     color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+  }
 
-    &:last-of-type {
-      margin-bottom: 40px;
+  &__button-wrapper {
+    filter: drop-shadow(0 0 30px rgba(113, 82, 239, 0.55));
+    transition: filter 0.3s ease;
+
+    &:hover {
+      filter: drop-shadow(0 0 40px rgba(113, 82, 239, 0.75));
+    }
+
+    &:active {
+      filter: drop-shadow(0 0 20px rgba(113, 82, 239, 0.35));
     }
   }
 

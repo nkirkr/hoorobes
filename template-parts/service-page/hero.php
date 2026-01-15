@@ -47,14 +47,16 @@
         $btn = carbon_get_the_post_meta('service_inner_btn');
         $btn_text = !empty($btn) ? $btn : 'Заказать услугу';
     ?>
-    <button
-      type="button"
-      class="service-page-hero__button button"
-      data-modal-open="briefModal"
-      aria-label="Заказать услугу"
-    >
-      <?php echo esc_html($btn_text); ?>
-    </button>
+    <div class="service-page-hero__button-wrapper">
+      <button
+        type="button"
+        class="service-page-hero__button button"
+        data-modal-open="briefModal"
+        aria-label="Заказать услугу"
+      >
+        <?php echo esc_html($btn_text); ?>
+      </button>
+    </div>
 
     <?php 
     $service_stats = carbon_get_the_post_meta('service_stats');

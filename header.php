@@ -77,13 +77,15 @@
         </a>
       </nav>
 
-      <button
-        class="header__button button"
-        data-modal-open="briefModal"
-        aria-label="Оформить заказ"
-      >
-        <span class="button__text">Сделать заказ</span>
-      </button>
+      <div class="header__button-wrapper">
+        <button
+          class="header__button button"
+          data-modal-open="briefModal"
+          aria-label="Оформить заказ"
+        >
+          <span class="button__text">Сделать заказ</span>
+        </button>
+      </div>
 
       <button
         class="header__menu-toggle"
