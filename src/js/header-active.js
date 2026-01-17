@@ -9,10 +9,21 @@ export function initHeaderActive() {
   const currentPage = currentPath.split('/').pop() || 'index.html';
   const currentHash = window.location.hash;
 
-  navLinks.forEach(link => {
-    link.classList.remove('active');
-  });
+  // НЕ удаляем класс active, если он уже есть (добавлен в PHP)
+  // Проверяем, есть ли уже активная ссылка
+  const hasActiveLink = Array.from(navLinks).some(link => link.classList.contains('active'));
 
+  // Если уже есть активная ссылка (добавлена в PHP), не трогаем её
+  // Обработка скролла будет только для главной страницы с якорями
+  if (hasActiveLink) {
+    // Если мы на главной странице и есть якорные ссылки, инициализируем скролл
+    if (currentPage === 'index.html' || currentPage === '' || currentPath === '/') {
+      updateActiveOnScroll(navLinks);
+    }
+    return;
+  }
+
+  // Если активной ссылки нет, работаем со старой логикой для .html страниц
   navLinks.forEach(link => {
     const linkPage = link.getAttribute('data-page');
     const linkHref = link.getAttribute('href');
@@ -30,10 +41,10 @@ export function initHeaderActive() {
         }
       }
     }
-    // Для ссылок вида ./index.html#about активное состояние устанавливается только через scroll
   });
 
-  if (currentPage === 'index.html' || currentPage === '') {
+  // Обработка скролла только для главной страницы
+  if (currentPage === 'index.html' || currentPage === '' || currentPath === '/') {
     updateActiveOnScroll(navLinks);
   }
 }
@@ -75,34 +86,27 @@ function updateActiveOnScroll(navLinks) {
       return;
     }
 
-    const viewportTop = scrollTop + offset; // Верхняя граница с учетом offset
-    const viewportCenter = scrollTop + windowHeight / 2; // Центр области просмотра
-    const viewportBottom = scrollTop + windowHeight; // Нижняя граница
+    const viewportTop = scrollTop + offset;
+    const viewportCenter = scrollTop + windowHeight / 2;
+    const viewportBottom = scrollTop + windowHeight;
 
     let activeSection = null;
     let minDistance = Infinity;
 
     sections.forEach(({ section }) => {
       const rect = section.getBoundingClientRect();
-      // rect.top - это позиция относительно viewport, нужно добавить scrollTop
       const sectionTop = scrollTop + rect.top;
       const sectionBottom = sectionTop + rect.height;
-      const sectionCenter = sectionTop + rect.height / 2;
 
-      // Секция должна быть видна в области просмотра
-      // Проверяем, что секция пересекается с видимой областью
       const isInViewport = (
         sectionTop < viewportBottom &&
         sectionBottom > viewportTop
       );
 
-      // Дополнительная проверка: секция должна быть достаточно близко к верхней части
-      // видимой области (с учетом offset) или к центру
       const isNearTop = sectionTop <= viewportTop + 200 && sectionBottom >= viewportTop;
       const isNearCenter = sectionTop <= viewportCenter && sectionBottom >= viewportCenter;
 
       if (isInViewport && (isNearTop || isNearCenter)) {
-        // Выбираем секцию, которая ближе всего к верхней части видимой области
         const distance = Math.abs(sectionTop - viewportTop);
         if (distance < minDistance) {
           minDistance = distance;
@@ -111,7 +115,7 @@ function updateActiveOnScroll(navLinks) {
       }
     });
 
-    // Устанавливаем активное состояние только если секция действительно видна
+    // Устанавливаем активное состояние только для якорных ссылок
     sections.forEach(({ link, section }) => {
       if (section === activeSection && activeSection !== null) {
         link.classList.add('active');
@@ -123,21 +127,15 @@ function updateActiveOnScroll(navLinks) {
 
   window.addEventListener('scroll', checkActiveSection, { passive: true });
   
-  // Проверяем активную секцию при загрузке только если:
-  // 1. Есть hash в URL (пользователь перешел по прямой ссылке)
-  // 2. Страница уже прокручена (не в самом верху)
   if (window.location.hash) {
-    // Если есть hash, проверяем после небольшой задержки
     setTimeout(() => {
       checkActiveSection();
     }, 100);
   } else if (window.scrollY > 50) {
-    // Если страница прокручена, проверяем
     setTimeout(() => {
       checkActiveSection();
     }, 100);
   } else {
-    // Если страница вверху и нет hash, снимаем все активные состояния
     sections.forEach(({ link }) => {
       link.classList.remove('active');
     });
@@ -149,4 +147,3 @@ if (document.readyState === 'loading') {
 } else {
   initHeaderActive();
 }
-

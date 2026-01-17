@@ -34,31 +34,94 @@ Container::make('post_meta', __('Информация об услуге', 'ercog
         
         // Левая колонка
         Field::make('separator', 'made_separator_left', 'Левая колонка (2 карточки)'),
-        Field::make('image', 'made_card_1_image', 'Изображение')->set_width(50),
-        Field::make('text', 'made_card_1_title', 'Название')->set_width(50),
+        Field::make('image', 'made_card_1_image', 'Изображение')->set_width(33),
+        Field::make('text', 'made_card_1_title', 'Название')->set_width(33),
+        Field::make('association', 'made_card_1_case', 'Связанный кейс')
+            ->set_types(array(
+                array(
+                    'type' => 'post',
+                    'post_type' => 'cases',
+                )
+        ))
+        ->set_width(33)
+        ->set_max(1),
         
-        Field::make('image', 'made_card_4_image', ' Изображение')->set_width(50),
-        Field::make('text', 'made_card_4_title', 'Название')->set_width(50),
+        Field::make('image', 'made_card_4_image', ' Изображение')->set_width(33),
+        Field::make('text', 'made_card_4_title', 'Название')->set_width(33),
+        Field::make('association', 'made_card_4_case', 'Связанный кейс')
+            ->set_types(array(
+                array(
+                    'type' => 'post',
+                    'post_type' => 'cases',
+                )
+        ))
+        ->set_width(33)
+        ->set_max(1),
         
         // Центральная колонка
         Field::make('separator', 'made_separator_center', 'Центральная колонка (2 карточки)'),
-        Field::make('image', 'made_card_2_image', 'Изображение')->set_width(50),
-        Field::make('text', 'made_card_2_title', 'Название')->set_width(50),
+        Field::make('image', 'made_card_2_image', 'Изображение')->set_width(33),
+        Field::make('text', 'made_card_2_title', 'Название')->set_width(33),
+        Field::make('association', 'made_card_2_case', 'Связанный кейс')
+            ->set_types(array(
+                array(
+                    'type' => 'post',
+                    'post_type' => 'cases',
+                )
+        ))
+        ->set_width(33)
+        ->set_max(1),
         
-        Field::make('image', 'made_card_6_image', 'Изображение')->set_width(50),
-        Field::make('text', 'made_card_6_title', 'Название')->set_width(50),
-        
+        Field::make('image', 'made_card_6_image', 'Изображение')->set_width(33),
+        Field::make('text', 'made_card_6_title', 'Название')->set_width(33),
+        Field::make('association', 'made_card_6_case', 'Связанный кейс')
+            ->set_types(array(
+                array(
+                    'type' => 'post',
+                    'post_type' => 'cases',
+                )
+        ))
+        ->set_width(33)
+        ->set_max(1),
         // Правая колонка
         Field::make('separator', 'made_separator_right', 'Правая колонка (3 карточки)'),
-        Field::make('image', 'made_card_3_image', 'Изображение')->set_width(50),
-        Field::make('text', 'made_card_3_title', 'Название')->set_width(50),
+        Field::make('image', 'made_card_3_image', 'Изображение')->set_width(33),
+        Field::make('text', 'made_card_3_title', 'Название')->set_width(33),
+        Field::make('association', 'made_card_3_case', 'Связанный кейс')
+            ->set_types(array(
+                array(
+                    'type' => 'post',
+                    'post_type' => 'cases',
+                )
+        ))
+        ->set_width(33)
+        ->set_max(1),
+
+        Field::make('image', 'made_card_5_image', 'Изображение')->set_width(33),
+        Field::make('text', 'made_card_5_title', 'Название')->set_width(33),
+        Field::make('association', 'made_card_5_case', 'Связанный кейс')
+            ->set_types(array(
+                array(
+                    'type' => 'post',
+                    'post_type' => 'cases',
+                )
+        ))
+        ->set_width(33)
+        ->set_max(1),
         
-        Field::make('image', 'made_card_5_image', 'Изображение')->set_width(50),
-        Field::make('text', 'made_card_5_title', 'Название')->set_width(50),
-        
-        Field::make('image', 'made_card_7_image', 'Изображение')->set_width(50),
-        Field::make('text', 'made_card_7_title', 'Название')->set_width(50),
+        Field::make('image', 'made_card_7_image', 'Изображение')->set_width(33),
+        Field::make('text', 'made_card_7_title', 'Название')->set_width(33),
+        Field::make('association', 'made_card_7_case', 'Связанный кейс')
+            ->set_types(array(
+                array(
+                    'type' => 'post',
+                    'post_type' => 'cases',
+                )
+        ))
+        ->set_width(33)
+        ->set_max(1),
     ])
+    
     ->add_tab('Про нас', [
         Field::make('image', 'about_image', 'Изображение'),
         Field::make('text', 'about_title', 'Заголовок')->set_width(33),

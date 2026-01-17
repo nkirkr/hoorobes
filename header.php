@@ -59,11 +59,11 @@
         role="navigation"
         aria-label="Основная навигация"
       >
-        <a href="<?php echo the_permalink(47); ?>" class="nav__link" data-page="services">
+        <a href="<?php echo the_permalink(47); ?>" class="nav__link <?php echo (is_page(47) || is_singular('services')) ? 'active' : ''; ?>" data-page="services">
           <span class="nav__link-blur"></span>
           <span class="nav__link-text">Услуги</span>
         </a>
-        <a href="<?php echo the_permalink(53); ?>" class="nav__link" data-page="projects">
+        <a href="<?php echo the_permalink(53); ?>" class="nav__link <?php echo (is_page(53) || is_singular('cases')) ? 'active' : ''; ?>" data-page="projects">
           <span class="nav__link-blur"></span>
           <span class="nav__link-text">Кейсы</span>
         </a>
